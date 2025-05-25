@@ -7,22 +7,22 @@
             class="py-2 px-1 w-full bg-transparent border-b focus:outline-none 
             focus:shadow-[0px_1px_0_0_#004E71] focus:border-weather-scondary" />
 
-            <ul v-if="openweathermapRsults.length" class="absolute bg-weather-scondary text-white w-full shadow-md
-            py-2 px-1 top-[66px]">
-                <p v-if="searchError">
+            <ul v-if="openweathermapRsults" class="absolute bg-weather-scondary text-white w-full shadow-md
+           top-[66px]">
+                <p class=" py-2 px-1 " v-if="searchError">
                     Sorry, something went wrong, please try again.
                 </p>
-                <p class="py-2" v-else-if="!searchError && openweathermapRsults && openweathermapRsults.length===0">
+                <p class=" py-2 px-1 " v-else-if="!searchError && searchQuery && openweathermapRsults.length === 0">
                     No results match your query, try a different term.
                 </p>
                 <template v-else>
                     <li v-for="(searchResult, index) in openweathermapRsults" 
-                :key="index"
-                class="py-2 cursor-pointer">
+                    :key="index" @click="previewCity(searchResult)"
+                    class= "py-2 cursor-pointer px-1 " >
                     {{ searchResult.name }},
                     {{ searchResult.state || ''}},
                     {{ searchResult.country }} 
-                 </li>
+                    </li>
                 </template>
             </ul>
         </div>
@@ -32,12 +32,30 @@
 <script setup>
 import {ref} from 'vue';
 import axios from 'axios';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const previewCity=(searchResult)=>{
+    console.log(searchResult);
+    const city = searchResult.name;
+    const state = searchResult.state;
+    router.push({
+        name: 'cityView',
+        params: {state: state, city: city},
+        query: {
+            lat: searchResult.lat,
+            lon: searchResult.lon,
+            preview: true
+        }
+    })
+}
 
 const searchQuery = ref("");
 const queryTimeout= ref(null);
 const openweathermapRsults = ref([]);
-const searchError = ref(null)
-const apiKey= "d41b1ee92fbedbd5df397e7407400630";
+const searchError = ref(false)
+const apiKey= "5d96731c2640185932bfa687657372ff";
 
 const getSearchResults = ()=>{
     clearTimeout(queryTimeout.value);
@@ -50,13 +68,13 @@ const getSearchResults = ()=>{
                 );
                 openweathermapRsults.value= result.data;
                 console.log(openweathermapRsults.value);
+                console.log(openweathermapRsults.value.length);
             }catch{
                 searchError.value = true
             }
-            
             return;
         }
-        openweathermapRsults.value = null
+        openweathermapRsults.value = []
     }, 300);
 }
 </script>
