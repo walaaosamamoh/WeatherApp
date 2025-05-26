@@ -1,15 +1,15 @@
 <template>
-    <div>
-        <Suspense>
-             <AsyncCityView/>
-             <template #fallback>
-                <p>Loading...</p>
-             </template>
-        </Suspense>
-    </div>
-
+  <div>
+    <Suspense>
+      <AsyncCityView />
+      <template #fallback>
+        <CityViewSkeleton />
+      </template>
+    </Suspense>
+  </div>
 </template>
 
 <script setup>
-import AsyncCityView from '../components/AsyncCityView.vue'
+import AsyncCityView from "../components/AsyncCityView.vue";
+import CityViewSkeleton from "../components/CityViewSkeleton.vue";
 </script>
