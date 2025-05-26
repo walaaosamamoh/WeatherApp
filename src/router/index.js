@@ -14,21 +14,11 @@ const routes = [
     path: "/weather/:state/:city",
     name: "cityView",
     component: CityView,
-  }
-  // {
-  //     path: '/services',
-  //     name: 'services',
-  //     component: Services
-  // },
-  // {
-  //     path: '/contact',
-  //     name: 'contact',
-  //     component: Contact
-  // }
+  },
 ];
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes,
 });
 
