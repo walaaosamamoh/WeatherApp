@@ -113,7 +113,7 @@ const apiKey = "5d96731c2640185932bfa687657372ff";
 const getWeatherData = async () => {
   try {
     const weatherData = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${route.query.lat}&lon=${route.query.lon}&exclude=minutely,hourly,alerts&appid=${apiKey}&units=imperial`
+      `https://api.openweathermap.org/data/2.5/weather?lat=${route.query.lat}&lon=${route.query.lon}&exclude=minutely,hourly,alerts&appid=${apiKey}&units=metric`
     );
 
     return weatherData.data;
@@ -125,7 +125,7 @@ const getWeatherData = async () => {
 const getForecastData = async () => {
   try {
     const res = await axios.get(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${route.query.lat}&lon=${route.query.lon}&exclude=minutely,hourly,alerts&appid=${apiKey}&units=imperial`
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${route.query.lat}&lon=${route.query.lon}&exclude=minutely,hourly,alerts&appid=${apiKey}&units=metric`
     );
 
     const forecastData = res.data;
